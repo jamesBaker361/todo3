@@ -1,0 +1,30 @@
+#r{
+
+}
+html{
+ overflow-y:scroll; 
+}
+body{ 
+	padding-top:50px; 
+}
+/*
+#todo-list{
+	margin-bottom:30px; 
+}
+.layer1{
+	margin-left: 4vh;
+}
+.layer2{
+	margin-left: 8vh;
+}
+.layer3{
+	margin-left: 12vh;
+}
+*/
+#taskInputForm{
+	margin-top: 55vh;
+	align-self: center;
+}
+.taskInputText{
+	width:50vw;
+}
