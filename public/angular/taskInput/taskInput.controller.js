@@ -7,16 +7,26 @@ function TaskInputController($scope,$http){
 	pressedSpaceOnce=false,
 	pressedSpaceTwice=false,
 	colors=["#8ca9d8","#dc9ee2","#a2e29e"],
+	$scope.change,
 	$scope.pressEnter=function(){
 		if(pressedEnter&&pressedSpaceTwice){
 			currentLayer++;
 		}
 	},
 	$scope.newInputText=function(){
-		var input="<input type=\"text\" class=\"taskInputText\" id=\"newText\" ><br>";
-		$("#taskInputForm").append(input);
+		var input="<br><input type=\"text\" class=\"taskInputText\" id=\"newText\" >";
+		//$("#taskInputForm").append(input);
+		$(":focus").after(input);
 		$("#newText").focus().select();
-	}
+	},
+	$scope.inputTextClick=function(){
+		var focus=$(":focus");
+		if(focus.attr("layer")){
+			currentLayer=focus.attr("layer");
+			currentTask=focus.attr("task");
+		}
+
+	},
 	$scope.newTask=function(){
 		console.log()
 		var idNew="L"+currentLayer.toString()+"T"+currentTask.toString();
@@ -118,12 +128,14 @@ function TaskInputController($scope,$http){
 		)
 	},
 	$scope.buttonClick=function(){
-		//console.log($(".taskInputText"));
+		console.log('clique');
+		console.log($(".taskInputText"));
+
 		freshTasks=$(".layer0");
 		for(var c=0;c<freshTasks.length;c++){
 			//if()
 			junk={
-				description:freshTasks[c].html(),
+				//description:freshTasks[c].html(),
 				
 			}
 		}
