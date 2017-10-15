@@ -1,6 +1,6 @@
 function TaskInputController($scope,$http,$compile){
 	$scope.tree=new Tree("root"),
-	parentNode=$scope.tree._root,
+	parentNode={},
 	currentLayer=0,
 	currentNode={},
 	pressedEnter=false,
@@ -8,9 +8,11 @@ function TaskInputController($scope,$http,$compile){
 	pressedSpaceTwice=false,
 	colors=["#8ca9d8","#dc9ee2","#a2e29e"],
 	$scope.begin=function(){
+		console.log($scope.tree._root);
 		$scope.tree._root.id="treeroot";
 		$scope.tree._root.model="tree._root";
 		currentNode=$scope.tree._root.addChild({description:""});
+		parentNode=$scope.tree._root;
 	},
 	$scope.newInputText=function(){
 		var input=angular.element("<br><input type=\"text\" class=\"taskInputText\" id=\"newText\" >");
@@ -20,13 +22,13 @@ function TaskInputController($scope,$http,$compile){
 	$scope.inputTextClick=function(){
 		var focus=$(":focus");
 		if(focus.attr("ng-model")){
-			var newNode="$scope."+(focus.attr("ng-model").substring(0,focus.attr("ng-model").length-17));
-			console.log(newNode);
-			console.log(eval(newNode));
+			var newNode=eval("$scope."+(focus.attr("ng-model").substring(0,focus.attr("ng-model").length-17)));
+			//console.log(newNode);
+			//console.log(eval(newNode));
 			currentNode=newNode;
 			parentNode=newNode.parent;
 			currentLayer=focus.attr("layer");
-			console.log(currentLayer);
+			//console.log(currentLayer);
 		}
 
 	},
@@ -60,7 +62,8 @@ function TaskInputController($scope,$http,$compile){
 		});
 	},
 	$scope.keyPressed=function(e){
-		//console.log(currentNode);
+		console.log(currentNode);
+		console.log(parentNode);
 		switch(e.originalEvent.key){
 			case("Enter"):
 				if(pressedEnter){

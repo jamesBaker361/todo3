@@ -15,8 +15,8 @@ Node.prototype.addChild=function(data,junk){
     node.id=this.id+"children"+(this.children.length-1).toString()+"";
     node.model=this.model+".children["+(this.children.length-1)+"]";
     return(node);
-    console.log("added lil baby",node);
 }
+
  
 function Tree(data,junk) {
     var node = new Node(data,junk);
