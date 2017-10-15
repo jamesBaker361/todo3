@@ -4,6 +4,18 @@ function Node(data,junk) {
     this.junk=junk;
     this.parent = null;
     this.children = [];
+    this.id="";
+    this.model="";
+}
+
+Node.prototype.addChild=function(data,junk){
+    node=new Node(data,junk);
+    this.children.push(node);
+    node.parent=this;
+    node.id=this.id+"children"+(this.children.length-1).toString()+"";
+    node.model=this.model+".children["+(this.children.length-1)+"]";
+    return(node);
+    console.log("added lil baby",node);
 }
  
 function Tree(data,junk) {
