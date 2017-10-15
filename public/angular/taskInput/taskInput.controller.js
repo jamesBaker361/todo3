@@ -20,7 +20,13 @@ function TaskInputController($scope,$http,$compile){
 	$scope.inputTextClick=function(){
 		var focus=$(":focus");
 		if(focus.attr("ng-model")){
-			console.log("$scope."+focus.attr("ng-model"));
+			var newNode="$scope."+(focus.attr("ng-model").substring(0,focus.attr("ng-model").length-17));
+			console.log(newNode);
+			console.log(eval(newNode));
+			currentNode=newNode;
+			parentNode=newNode.parent;
+			currentLayer=focus.attr("layer");
+			console.log(currentLayer);
 		}
 
 	},
@@ -39,7 +45,7 @@ function TaskInputController($scope,$http,$compile){
 		color=colors[Math.floor(3*Math.random())];
 		$("#newText").prev().focus().select();
 		$("#newText").remove();
-		var input=angular.element("<input type=\"text\" ng-click=\"inputTextClick()\" id="+currentNode.id+" class=\"taskInputText ng-pristine ng-valid ng-not-empty ng-touched\" ng-model="+currentNode.model+".data.description"+">");
+		var input=angular.element("<input type=\"text\" ng-click=\"inputTextClick()\" layer="+currentLayer+" id="+currentNode.id+" class=\"taskInputText ng-pristine ng-valid ng-not-empty ng-touched\" ng-model="+currentNode.model+".data.description"+" >");
 		$compile(input)($scope);
 		if(parentNode.id=="treeroot"){
 			input.appendTo($("#taskInputForm")).focus().select();
@@ -106,21 +112,6 @@ function TaskInputController($scope,$http,$compile){
 		}
 	}
 	$scope.submitTask=function(){
-		$http.patch('/task',$scope.task);
-	},
-	$scope.makeMicroTask=function(desc){
-		$scope.task.microTasks.push(
-			{
-				description: desc,
-				today:true,
-				done:false,
-				microTasks:[],
-				layer:$scope.task.layer+1,
-				child:true
-			}
-		)
-	},
-	$scope.buttonClick=function(){
-	
+		$http.patch('/task',$scope.tree);
 	}
 }
