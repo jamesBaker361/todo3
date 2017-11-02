@@ -28,3 +28,7 @@ body{
 .taskInputText{
 	width:150vw;
 }
+button{
+	background-color: red;
+	width: 10vw;
+}

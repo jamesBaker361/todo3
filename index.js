@@ -11,15 +11,26 @@ mongo.connect(url,function(err,db){
 
 	app.get('/',function(req,res){
 		res.sendFile(__dirname+'/index.html');
-		console.log(tree);
 	});
 
-	app.post('/task',function(req,res){
-		console.log(req.body);
-		res.send("🐒");
+	app.post('/tasks',function(req,res){
+		//console.log("esketit");
+		//finds all the tasks that are for today and have not been done and sends them back to the client
+		db.collection("tasks").find({done:false,today:true}).toArray(function(err,out){
+			res.send(out);
+		})
 	});
 
-
+	app.patch('/task',function(req,res){
+		console.log("🙉");
+		var tasks=req.body._root.children;
+		for(var k=0;k<tasks.length;k++){
+			db.collection("tasks").insertOne(tasks[k]);
+		}
+		res.send("🙉");
+		//for(var y=0;y<req.body)
+		//db.collection("tasks")
+	});
 
 	app.listen(port,function(){
 		console.log("🐥");

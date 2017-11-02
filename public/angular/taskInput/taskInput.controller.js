@@ -115,6 +115,20 @@ function TaskInputController($scope,$http,$compile){
 		}
 	}
 	$scope.submitTask=function(){
-		$http.patch('/task',$scope.tree);
+		//cant use json with a circular structure, which is fair
+		//so lets delete the parent property of the tree?
+		var cleanTree=$scope.tree;
+		cleanTree.traverseDF(function(node){
+			//console.log(node.parent);
+			node.parent=undefined;
+			node.done=false;
+			node.today=true;
+		});
+		$http.patch('/task',$scope.tree).then(function(success){
+			console.log(success);
+			location.reload();
+		},function(error){
+			console.log(error);
+		});
 	}
 }

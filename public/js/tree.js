@@ -6,6 +6,20 @@ function Node(data,junk) {
     this.children = [];
     this.id="";
     this.model="";
+    this.layer=-1;
+    this.done=false;
+    this.tomorrow=true;
+    this.numID=1;
+    /*
+    new tree property numID
+    000 000 000 000
+    like every layer is a new sequence of 000s, and like the branch id will be 000, 001, 002, etc.
+    wait that wouldn't work b/c the computer can't distinguuish 001 and 1
+    but if tree._root.numID=1
+    and then we add parent ID*1000^layer
+    numID would have to start at 1, not 0 :(
+    >:)
+    */
 }
 
 Node.prototype.addChild=function(data,junk){
@@ -14,6 +28,9 @@ Node.prototype.addChild=function(data,junk){
     node.parent=this;
     node.id=this.id+"children"+(this.children.length-1).toString()+"";
     node.model=this.model+".children["+(this.children.length-1)+"]";
+    node.layer=this.layer+1;
+    node.index=this.children.length-1;
+    node.numID=(this.numID*100)+node.index+1;
     return(node);
 }
 

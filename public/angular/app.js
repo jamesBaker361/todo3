@@ -1,4 +1,4 @@
-var app=angular.module('toDoList',['list','ngRoute','taskInput'])
+var app=angular.module('toDoList',['list','ngRoute','taskInput','checkBox'])
 
 app.controller('toDoList',['$scope','$location','$rootScope','$http',function($scope,$location,$rootScope,$http){
 
